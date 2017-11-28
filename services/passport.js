@@ -19,7 +19,8 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID, //idenitfy ourself to google servers
     clientSecret: keys.googleClientSecret,
-    callbackURL: keys.googleRedirectURI,
+    callbackURL: '/auth/google/callback',
+    proxy: true,
 }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ googleID: profile.id }).then((existingUser)=> { if (existingUser) {
         // we already have a record with a given profile id
